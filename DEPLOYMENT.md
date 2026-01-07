@@ -1,8 +1,21 @@
 # Netlify Client Dashboard - Deployment Guide
 
-## About the Build Warning
+## Build Issues & Solutions
 
-When deploying to Netlify, you may see a warning about chunk sizes:
+### Common Build Errors
+
+#### "tsc: Permission denied" or "Command not found"
+**Fixed in latest version** - The build script now uses `npx` to run TypeScript compiler and Vite:
+
+```json
+"build": "npx tsc && npx vite build"
+```
+
+This ensures the locally installed versions are used, avoiding PATH issues on Netlify.
+
+### Chunk Size Warning
+
+You may see a warning about chunk sizes:
 
 ```
 (!) Some chunks are larger than 500 kB after minification.
