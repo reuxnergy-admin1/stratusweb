@@ -1,17 +1,24 @@
 # Netlify Client Dashboard - Deployment Guide
 
-## Build Issues & Solutions
+## Build Configuration
 
-### Common Build Errors
-
-#### "tsc: Permission denied" or "Command not found"
-**Fixed in latest version** - The build script now uses `npx` to run TypeScript compiler and Vite:
+### Build Script
+The build uses Vite alone, which handles TypeScript compilation internally:
 
 ```json
-"build": "npx tsc && npx vite build"
+"build": "vite build"
 ```
 
-This ensures the locally installed versions are used, avoiding PATH issues on Netlify.
+**Why no separate TypeScript compilation?**
+- Vite's esbuild-based build system compiles TypeScript automatically
+- Removes the permission issues with running `tsc` on Netlify
+- Faster build times (esbuild is much faster than tsc)
+- For type-checking during development, use: `npm run typecheck`
+
+### Build Issues & Solutions
+
+#### Previous "tsc: Permission denied" Error
+**RESOLVED** - Removed the separate TypeScript compilation step. Vite handles all TypeScript compilation during the build process.
 
 ### Chunk Size Warning
 
